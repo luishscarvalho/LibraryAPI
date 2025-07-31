@@ -27,4 +27,12 @@ public class BookService
     {
         return showcase.Find(identificador => id == identificador.Id);
     }
+
+    public Book CreateBook(Book newBook) 
+    {
+        var newId = showcase.Max(book => book.Id) +1;
+        newBook.Id = newId;
+        showcase.Add(newBook);
+        return newBook;
+    }
 }

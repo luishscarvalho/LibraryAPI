@@ -1,5 +1,7 @@
-﻿using LibraryAPI.Services;
+﻿using LibraryAPI.Models;
+using LibraryAPI.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryAPI.Controllers;
@@ -18,6 +20,14 @@ public class BookController : ControllerBase
     public IActionResult GetBookById(int id)
     { 
         var research = new BookService().GetBookById(id);
+        if(research == null) { return NotFound(); }
         return Ok(research);
+    }
+
+    [HttpPost]
+    public IActionResult CreateBook([FromBody] Book newBook)
+    {
+        var booking = new BookService().CreateBook(newBook);
+        return Created($"api/book/{booking.Id}", booking);
     }
 }

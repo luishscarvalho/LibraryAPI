@@ -35,4 +35,22 @@ public class BookService
         showcase.Add(newBook);
         return newBook;
     }
+
+    public Book? FindBook(int id, Book newBook) 
+    {
+        var bookFound = showcase.Find(identificador => id == identificador.Id);
+        if (bookFound != null)
+        {
+            bookFound.Title = newBook.Title;
+            bookFound.Author = newBook.Author;
+            bookFound.Genre = newBook.Genre;
+            bookFound.Price = newBook.Price;
+            bookFound.StockQuantity = newBook.StockQuantity;
+
+            return bookFound;
+        }
+        else {
+            return null;
+        }
+    }
 }

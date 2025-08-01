@@ -18,9 +18,9 @@ public class BookController : ControllerBase
 
     [HttpGet("{id}")]
     public IActionResult GetBookById(int id)
-    { 
+    {
         var research = new BookService().GetBookById(id);
-        if(research == null) { return NotFound(); }
+        if (research == null) { return NotFound(); }
         return Ok(research);
     }
 
@@ -29,5 +29,27 @@ public class BookController : ControllerBase
     {
         var booking = new BookService().CreateBook(newBook);
         return Created($"api/book/{booking.Id}", booking);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateBook([FromBody] Book newBook, int id)
+    {
+        var bookFound = new BookService().FindBook(id, newBook);
+        if (bookFound == null)
+        {
+            return NotFound();
+        }
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteBook(int id)
+    {
+        var bookDeleted = new BookService().DeleteBook(id);
+        if(bookDeleted == true) 
+        {  
+            return NoContent(); 
+        }
+        return NotFound();
     }
 }

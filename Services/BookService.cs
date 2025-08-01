@@ -53,4 +53,15 @@ public class BookService
             return null;
         }
     }
+
+    public bool DeleteBook(int id) 
+    {
+        var findBook = showcase.Find(identificador => id == identificador.Id);
+        if (findBook != null) 
+        {
+            showcase.Remove(findBook);
+            return true;
+        }
+        return false;
+    }
 }

@@ -9,7 +9,9 @@ namespace LibraryAPI.Controllers;
 [ApiController]
 public class BookController : ControllerBase
 {
+
     [HttpGet]
+    [ProducesResponseType(typeof(List<Book>), StatusCodes.Status200OK)]
     public IActionResult GetBooks()
     {
         var showcase = new BookService().GetBooks();
@@ -17,6 +19,8 @@ public class BookController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetBookById(int id)
     {
         var research = new BookService().GetBookById(id);
@@ -25,6 +29,8 @@ public class BookController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(Book), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult CreateBook([FromBody] Book newBook)
     {
         var booking = new BookService().CreateBook(newBook);
@@ -32,6 +38,9 @@ public class BookController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult UpdateBook([FromBody] Book newBook, int id)
     {
         var bookFound = new BookService().FindBook(id, newBook);
@@ -43,6 +52,8 @@ public class BookController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult DeleteBook(int id)
     {
         var bookDeleted = new BookService().DeleteBook(id);
